@@ -31,15 +31,18 @@ def extract_course_info(soup):
 	Returns a list of dicts with keys: number, title, credits, description.
 	"""
 	courses = []
-	# This selector may need adjustment based on actual HTML structure
-	# Try to find all course blocks (commonly div, tr, or li)
-	for course_block in soup.find_all(['div', 'tr', 'li'], class_=re.compile(r'course', re.I)):
-		text = course_block.get_text(separator=' ', strip=True)
-		# Regex to extract course number, title, credits, description
-		# Example: "CS 101 Introduction to Programming (3 credits) Description..."
-		match = re.match(r'([A-Z]{2,4} ?\d{3,4}[A-Z]?)\s+(.+?)\s*\((\d+(?:\.\d+)?)\s*credits?\)\s*(.*)', text)
+	# Find all course blocks (div, tr, li with class containing 'course')
+	for courseblock in soup.find_all('div', class_='courseblock'):
+		title_tag = courseblock.find('p', class_='courseblocktitle')
+		desc_tag = courseblock.find('p', class_='cb_desc')
+		if not title_tag or not title_tag.find('strong'):
+			continue
+		title_str = title_tag.find('strong').get_text(strip=True)
+		# Regex: ACCT 1201.  Financial Accounting and Reporting.  (4 Hours)
+		match = re.match(r'^([A-Z]{2,4}\s*\d{3,4}[A-Z]?)\.\s*(.*?)\.\s*\((\d+(?:-\d+)?(?:\.\d+)?)\s*Hours?\)$', title_str)
 		if match:
-			number, title, credits, description = match.groups()
+			number, title, credits = match.groups()
+			description = desc_tag.get_text(strip=True) if desc_tag else ''
 			courses.append({
 				'number': number.strip(),
 				'title': title.strip(),
@@ -47,17 +50,15 @@ def extract_course_info(soup):
 				'description': description.strip()
 			})
 		else:
-			# Fallback: try to extract with less strict pattern
-			parts = text.split(' ', 2)
-			if len(parts) >= 3:
-				number, title, rest = parts[0], parts[1], parts[2]
-				credits_match = re.search(r'(\d+(?:\.\d+)?)\s*credits?', rest, re.I)
-				credits = credits_match.group(1) if credits_match else ''
-				description = rest.split(')', 1)[-1].strip() if ')' in rest else rest
+			# Fallback: try to extract number and title only
+			fallback_match = re.match(r'^([A-Z]{2,4}\s*\d{3,4}[A-Z]?)\.\s*(.*?)\.$', title_str)
+			if fallback_match:
+				number, title = fallback_match.groups()
+				description = desc_tag.get_text(strip=True) if desc_tag else ''
 				courses.append({
 					'number': number.strip(),
 					'title': title.strip(),
-					'credits': credits.strip(),
+					'credits': '',
 					'description': description.strip()
 				})
 	return courses
