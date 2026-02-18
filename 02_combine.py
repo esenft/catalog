@@ -39,4 +39,4 @@ if __name__ == "__main__":
         concatenate_html_files(html_files, OUTPUT_FILE)
         print(f"Combined {len(html_files)} HTML files into '{OUTPUT_FILE}'.")
 
-# Note: this file does not modify the HTML content, so the original structure of each file is preserved
+# Note: this file does not modify the HTML content, so the original structure of each file should be preserved
