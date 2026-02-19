@@ -1,0 +1,52 @@
+
+<html>
+	<head>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script type="text/javascript">
+			google.charts.load('current', {packages:['corechart']});
+			google.charts.setOnLoadCallback(drawChart);
+			function drawChart() {
+				var data = google.visualization.arrayToDataTable([
+					['Word', 'Frequency'],
+					['elective', 853],
+        ['research', 410],
+        ['law', 365],
+        ['design', 277],
+        ['management', 263],
+        ['project', 260],
+        ['topics', 253],
+        ['introduction', 235],
+        ['study', 233],
+        ['international', 227],
+        ['advanced', 227],
+        ['engineering', 208],
+        ['nrsg', 196],
+        ['cs', 193],
+        ['directed', 184],
+        ['lab', 178],
+        ['systems', 176],
+        ['experience', 176],
+        ['health', 170],
+        ['eece', 167]
+				]);
+				var options = {
+					title: 'Top Word Frequencies in Course Titles',
+					legend: { position: 'none' },
+					chartArea: {width: '70%'},
+					hAxis: { minValue: 0 },
+					bar: { groupWidth: '90%' },
+					vAxis: {
+						textStyle: { fontSize: 14 },
+						slantedText: false,
+						showTextEvery: 1
+					}
+				};
+				var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+				chart.draw(data, options);
+			}
+		</script>
+	</head>
+	<body>
+		<div id="barchart" style="width: 900px; height: 600px;"></div>
+	</body>
+</html>

@@ -57,6 +57,10 @@ def main():
 	# Print top 20 most common words
 	for word, count in word_counts.most_common(20):
 		print(f'{word}: {count}')
+	# Save all word frequencies to a JSON file for visualization
+	import json
+	with open('word_frequencies.json', 'w', encoding='utf-8') as f:
+		json.dump(dict(word_counts), f, ensure_ascii=False, indent=2)
 
 if __name__ == '__main__':
 	main()
