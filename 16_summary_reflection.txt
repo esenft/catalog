@@ -7,3 +7,13 @@
 #  catalog over time. Relate these changes to 
 #  broader trends in education and industry.
 # -----------------------------------------------
+
+# A compilation of findings from previous scripts can be found in the catalog_analysis_summary.pdf file.
+# Overall, I have found that MIT has added many courses to the cirriculum between 1996 and 2024.
+# The total course offerings more than doubled from 2,164 courses to 4,877 courses.
+# Additionally, new departments were added, such as Computational and Systems Biology (CSB) and Engineering and Management (EM). 
+# These changes are necessary to teach cutting-edge technologies and evolve with changes in engineering.
+# Many of the courses follow similar naming conventions, but in newer courses, words like "history" and "methods" are more common, 
+# which suggests that the cirriculum is focusing on foundational theories and methodologies to produce well-rounded students.
+# This assignment has opened my eyes up to just how many courses are offered at MIT!
+# I am curious to see how the cirriculum continues to evolve with the adoption of AI and ML.
