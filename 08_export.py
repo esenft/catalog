@@ -18,3 +18,26 @@
 #  any assumptions or decisions made during 
 #  the data preparation process.
 # -----------------------------------------------
+
+# 8. Export Cleaned University Catalog Dataset
+#
+# This script exports the cleaned, well-formatted dataset of the entire university catalog.
+# It uses the output from 04_clean.py (cleaned_courses.tsv), which includes all information (number, title, credits, description).
+# The export is written as a CSV file for easy use in analysis and visualization.
+
+import csv
+
+INPUT_FILE = 'cleaned_courses.tsv'
+EXPORT_FILE = 'catalog_export.csv'
+
+def export_cleaned_catalog():
+	with open(INPUT_FILE, 'r', encoding='utf-8') as fin, open(EXPORT_FILE, 'w', encoding='utf-8', newline='') as fout:
+		reader = (line.rstrip('\n').split('\t') for line in fin)
+		writer = csv.writer(fout)
+		for row in reader:
+			writer.writerow(row)
+	print(f"Exported cleaned catalog to {EXPORT_FILE}")
+
+if __name__ == '__main__':
+	export_cleaned_catalog()
+
